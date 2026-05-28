@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  mobile    String   @unique
+  name      String
+  role      String   @default("farmer") // "farmer" or "expert"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions    Session[]
+  farmProfile FarmProfile?
+  activities  Activity[]
+  notifications Notification[]
+  posts      CommunityPost[]
+  likes      CommunityLike[]
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  mobile    String
+  code      String
+  verified  Boolean  @default(false)
+  purpose   String   @default("auth") // "signup" or "login"
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FarmProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  state       String   @default("Madhya Pradesh")
+  district    String   @default("")
+  village     String   @default("")
+  pinCode     String   @default("")
+  landSize    Float    @default(5)
+  landUnit    String   @default("Acre")
+  soilType    String   @default("Black Soil (Regur / Black Cotton)")
+  ph          Float    @default(6.5)
+  soilFertility String @default("Good")
+  nitrogen    String   @default("Medium")
+  phosphorus  String   @default("Medium")
+  potassium   String   @default("Medium")
+  irrigation  String   @default("Borewell")
+  currentCrop String   @default("Wheat")
+  prevCrop    String   @default("Soybean")
+  budget      Float    @default(75000)
+  labourCost  Float    @default(18000)
+  sellingPreference String @default("Local Market")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  userId    String
+  icon      String
+  text      String
+  type      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  desc      String
+  type      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CommunityPost {
+  id        String   @id @default(cuid())
+  userId    String
+  author    String
+  avatar    String
+  avatarColor String @default("#2E7D32")
+  location  String
+  content   String
+  tags      String   @default("[]") // JSON array stored as string
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     CommunityLike[]
+}
+
+model CommunityLike {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+}
