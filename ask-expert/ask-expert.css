@@ -1,0 +1,398 @@
+/* Ask Expert page styles */
+.ae-msg { max-width: 85%; padding: 10px 12px; border-radius: 14px; font-size: 13px; line-height: 1.45; word-break: break-word; }
+.ae-msg-farmer { background: #16a34a; color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
+.ae-msg-ai     { background: #eff6ff; color: #1e3a8a; border: 1px solid #dbeafe; border-bottom-left-radius: 4px; }
+.ae-msg-expert { background: #fff7ed; color: #7c2d12; border: 1px solid #fed7aa; border-bottom-left-radius: 4px; }
+.dark .ae-msg-ai     { background: rgba(30,58,138,0.25); color:#bfdbfe; border-color: rgba(30,58,138,0.5); }
+.dark .ae-msg-expert { background: rgba(124,45,18,0.25); color:#fed7aa; border-color: rgba(124,45,18,0.5); }
+.ae-msg-meta { font-size: 10px; opacity: 0.7; margin-bottom: 2px; font-weight: 600; }
+.ae-msg img { border-radius: 8px; max-width: 100%; margin-top: 6px; display:block; }
+.ae-msg audio { width: 100%; margin-top: 6px; }
+.ae-photo-thumb { position:relative; width: 72px; height: 72px; border-radius: 10px; overflow:hidden; border:1px solid rgba(0,0,0,0.1); }
+.ae-photo-thumb img { width:100%; height:100%; object-fit:cover; }
+.ae-photo-thumb button { position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.6); color:#fff; border-radius:999px; width:18px; height:18px; font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center; }
+.ae-consult-card { transition: transform .15s ease, box-shadow .15s ease; }
+.ae-consult-card:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+.ae-status-pill { font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; white-space:nowrap; }
+.ae-status-waiting  { background:#fef3c7; color:#92400e; }
+.ae-status-replied  { background:#dbeafe; color:#1e40af; }
+.ae-status-resolved { background:#dcfce7; color:#166534; }
+.dark .ae-status-waiting  { background:rgba(146,64,14,0.25); color:#fcd34d; }
+.dark .ae-status-replied  { background:rgba(30,64,175,0.3);  color:#bfdbfe; }
+.dark .ae-status-resolved { background:rgba(22,101,52,0.3);  color:#bbf7d0; }
+
+/* ============================================================
+   Chat + Expert Video responsive layout
+   ------------------------------------------------------------
+   Mobile / tablet  : single column, video stacked below chat
+   Desktop (lg+)    : side-by-side chat (2fr) + video (1fr)
+   ============================================================ */
+.ae-chat-grid { display: flex; flex-direction: column; gap: 16px; }
+
+.ae-chat-panel { height: calc(100vh - 320px); min-height: 420px; }
+
+@media (min-width: 1024px) {
+  .ae-chat-grid { display: grid; grid-template-columns: 2fr 1fr; align-items: start; }
+  .ae-chat-panel { height: calc(100vh - 220px); min-height: 480px; }
+  .ae-video-card { position: sticky; top: 0; }
+}
+
+/* ---------- Expert Video card ---------- */
+.ae-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.ae-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Fallback shown when no video / load error */
+.ae-video-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 16px;
+  color: #e5e7eb;
+  background-size: cover;
+  background-position: center;
+}
+.ae-video-fallback::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+.ae-video-fallback i,
+.ae-video-fallback span { position: relative; z-index: 1; }
+.ae-video-fallback span { font-size: 12px; font-weight: 600; }
+
+/* ============================================================
+   NEW CONSULTATION FORM STYLING (#ae-form-view)
+   Theme-aware styles for Ask Expert Consultation Query form
+   ============================================================ */
+
+/* ---------- Container Surface & Typography ---------- */
+#ae-form-view {
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dark #ae-form-view {
+  background-color: #0f172a;
+  border-color: #1e293b;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+#ae-form-view h3 {
+  color: #0f172a;
+}
+
+.dark #ae-form-view h3 {
+  color: #f8fafc;
+}
+
+#ae-form-view .ae-back-btn.text-xs {
+  color: #059669;
+  transition: color 0.15s ease;
+}
+
+#ae-form-view .ae-back-btn.text-xs:hover {
+  color: #047857;
+}
+
+.dark #ae-form-view .ae-back-btn.text-xs {
+  color: #34d399;
+}
+
+.dark #ae-form-view .ae-back-btn.text-xs:hover {
+  color: #6ee7b7;
+}
+
+/* ---------- Form Labels & Subtext ---------- */
+#ae-form-view .bv-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.375rem;
+}
+
+.dark #ae-form-view .bv-label {
+  color: #cbd5e1;
+}
+
+#ae-form-view .bv-label span {
+  color: inherit;
+}
+
+#ae-form-view .bv-label span.text-slate-400,
+#ae-form-view label span.text-slate-400 {
+  color: #64748b;
+  font-weight: 400;
+}
+
+.dark #ae-form-view .bv-label span.text-slate-400,
+.dark #ae-form-view label span.text-slate-400 {
+  color: #94a3b8;
+}
+
+/* ---------- Form Controls: Input, Select, Textarea ---------- */
+#ae-form-view .bv-input,
+#ae-form-view input[type="text"],
+#ae-form-view select,
+#ae-form-view textarea {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  padding: 0.6875rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0f172a;
+  outline: none;
+  line-height: 1.5;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#ae-form-view .bv-input::placeholder,
+#ae-form-view input::placeholder,
+#ae-form-view textarea::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+#ae-form-view .bv-input:focus,
+#ae-form-view input[type="text"]:focus,
+#ae-form-view select:focus,
+#ae-form-view textarea:focus {
+  border-color: #059669;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+  outline: none;
+}
+
+/* Dark Mode Controls */
+.dark #ae-form-view .bv-input,
+.dark #ae-form-view input[type="text"],
+.dark #ae-form-view select,
+.dark #ae-form-view textarea {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.dark #ae-form-view .bv-input::placeholder,
+.dark #ae-form-view input::placeholder,
+.dark #ae-form-view textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.dark #ae-form-view .bv-input:focus,
+.dark #ae-form-view input[type="text"]:focus,
+.dark #ae-form-view select:focus,
+.dark #ae-form-view textarea:focus {
+  border-color: #10b981;
+  background-color: #0f172a;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Custom Select Dropdown Styling */
+#ae-form-view select.bv-input,
+#ae-form-view select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 1rem 1rem;
+}
+
+.dark #ae-form-view select.bv-input,
+.dark #ae-form-view select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+#ae-form-view select option {
+  background-color: #ffffff;
+  color: #0f172a;
+  padding: 0.5rem;
+}
+
+.dark #ae-form-view select option {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+/* ---------- Media Buttons (Camera, Gallery, Upload Audio) ---------- */
+.ae-btn-camera {
+  border-color: #86efac;
+  background-color: #f0fdf4;
+  color: #15803d;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.ae-btn-camera:hover {
+  background-color: #dcfce7;
+  border-color: #4ade80;
+}
+
+.dark .ae-btn-camera {
+  border-color: rgba(16, 185, 129, 0.4);
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+}
+
+.dark .ae-btn-camera:hover {
+  background-color: rgba(16, 185, 129, 0.18);
+  border-color: #10b981;
+}
+
+.ae-btn-secondary {
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+  color: #334155;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.ae-btn-secondary:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.dark .ae-btn-secondary {
+  border-color: #334155;
+  background-color: rgba(30, 41, 59, 0.6);
+  color: #cbd5e1;
+}
+
+.dark .ae-btn-secondary:hover {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+/* ---------- Voice Recording Button & Timer ---------- */
+#ae-record-btn {
+  border-color: #fecaca;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+#ae-record-btn:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.dark #ae-record-btn {
+  border-color: rgba(239, 68, 68, 0.35);
+  background-color: rgba(153, 27, 27, 0.2);
+  color: #f87171;
+}
+
+.dark #ae-record-btn:hover {
+  background-color: rgba(153, 27, 27, 0.35);
+  border-color: #ef4444;
+}
+
+#ae-record-timer {
+  color: #475569;
+  font-weight: 700;
+}
+
+.dark #ae-record-timer {
+  color: #cbd5e1;
+}
+
+/* ---------- Info Message Box ---------- */
+#ae-desc-info {
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+  color: #0369a1;
+}
+
+.dark #ae-desc-info {
+  background-color: rgba(14, 116, 144, 0.2);
+  border-color: rgba(14, 116, 144, 0.4);
+  color: #7dd3fc;
+}
+
+/* ---------- Action Buttons: Submit & Cancel ---------- */
+#ae-submit {
+  background-color: #15803d;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease;
+}
+
+#ae-submit:hover {
+  background-color: #166534;
+}
+
+.dark #ae-submit {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.dark #ae-submit:hover {
+  background-color: #10b981;
+}
+
+#ae-form-view .border-t {
+  border-color: #e2e8f0;
+}
+
+.dark #ae-form-view .border-t {
+  border-color: #1e293b;
+}
+
+#ae-form-view .ae-cancel-btn {
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #334155;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+#ae-form-view .ae-cancel-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.dark #ae-form-view .ae-cancel-btn {
+  border-color: #334155;
+  background-color: #1e293b;
+  color: #cbd5e1;
+}
+
+.dark #ae-form-view .ae-cancel-btn:hover {
+  background-color: #334155;
+  color: #f8fafc;
+}
+

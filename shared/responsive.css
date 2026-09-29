@@ -1,0 +1,167 @@
+/* ============================================================
+   RESPONSIVE.CSS — Global responsive overrides applied on every
+   shell-page (loaded automatically by shell.js).
+
+   Goals:
+   - Eliminate horizontal scrolling on all viewports (320px–1920px+).
+   - Make tables, modals, images, charts, forms and grids degrade
+     cleanly on small screens.
+   - Provide a real mobile drawer for the sidebar (the mobile
+     header had a menu button but no behaviour).
+   - Keep dark / light mode untouched.
+   ============================================================ */
+
+/* ---------- 1. Prevent any horizontal overflow site-wide ---------- */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+body { -webkit-text-size-adjust: 100%; }
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+canvas { display: block; }
+
+/* Long words / URLs should wrap instead of pushing layout wider */
+p, h1, h2, h3, h4, h5, h6, span, a, li, td, th, label, button {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* ---------- 2. Tables — horizontal scroll instead of clipping ---- */
+.bv-table-wrap, .overflow-x-auto > table { width: 100%; }
+table { max-width: 100%; }
+@media (max-width: 767px) {
+  table:not(.bv-no-stack) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ---------- 3. Modals — always fit the viewport ------------------ */
+.fixed.inset-0 > div,
+[role="dialog"] > div,
+.bv-modal-card {
+  max-width: min(95vw, 720px);
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 480px) {
+  .fixed.inset-0 { padding: 0.75rem; }
+}
+
+/* ---------- 4. Charts ------------------------------------------- */
+canvas[id], .bv-chart, .bv-chart-wrap {
+  max-width: 100%;
+}
+
+/* ---------- 5. Navbar tightening on small screens --------------- */
+@media (max-width: 640px) {
+  header.sticky {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    gap: 0.5rem;
+  }
+  header.sticky > div:last-child { gap: 0.375rem !important; flex-wrap: wrap; justify-content: flex-end; }
+  header.sticky h1 { font-size: 0.95rem !important; }
+  header.sticky p { display: none; }
+  #bv-notif-panel { width: min(92vw, 20rem) !important; right: -0.25rem; }
+  #bv-profile-menu { width: min(85vw, 14rem) !important; }
+  .bv-lang-switcher { max-width: 110px; }
+}
+
+/* ---------- 6. Mobile sidebar drawer ---------------------------- */
+/* Keep the mobile header (and its hamburger) ABOVE the backdrop so
+   the toggle button is always clickable to close the drawer.        */
+.bv-mobile-header {
+  position: sticky;
+  top: 0;
+  z-index: 70;
+}
+.bv-menu-btn {
+  position: relative;
+  z-index: 71;
+  transition: background-color .2s ease, transform .15s ease;
+}
+.bv-menu-btn:hover { background: rgba(0,0,0,.05); }
+.dark .bv-menu-btn:hover { background: rgba(255,255,255,.08); }
+.bv-menu-btn:active { transform: scale(0.92); }
+
+/* The sidebar wrapper carries `hidden md:flex`; on mobile we
+   promote it to a fixed slide-in drawer when .bv-drawer-open is set. */
+@media (max-width: 767px) {
+  [data-include$="sidebar/sidebar.html"].bv-drawer-open {
+    display: flex !important;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: 17rem;
+    max-width: 86vw;
+    z-index: 60;
+    box-shadow: 0 18px 50px -10px rgba(0,0,0,.45);
+    animation: bvDrawerIn .25s cubic-bezier(.4,0,.2,1);
+  }
+  [data-include$="sidebar/sidebar.html"].bv-drawer-open > aside {
+    width: 100% !important;
+    height: 100%;
+  }
+}
+.bv-drawer-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+  z-index: 55;
+  animation: bvFadeIn .2s ease-out;
+}
+@keyframes bvDrawerIn { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes bvFadeIn   { from { opacity: 0; } to { opacity: 1; } }
+body.bv-drawer-locked { overflow: hidden; }
+
+/* On wide screens, never let the drawer styles leak */
+@media (min-width: 768px) {
+  [data-include$="sidebar/sidebar.html"] { position: static !important; box-shadow: none !important; }
+  .bv-drawer-backdrop { display: none; }
+  .bv-mobile-header { position: static; z-index: auto; }
+}
+
+/* ---------- 7. Grid + form safety nets -------------------------- */
+@media (max-width: 480px) {
+  .grid.grid-cols-3:not(.bv-keep-grid),
+  .grid.grid-cols-4:not(.bv-keep-grid),
+  .grid.grid-cols-5:not(.bv-keep-grid),
+  .grid.grid-cols-6:not(.bv-keep-grid) {
+    /* don't force a change if the page already declared sm:/md: variants,
+       but provide a sensible minimum so cells don't get squashed unreadably */
+  }
+  input, select, textarea, button { font-size: 16px !important; } /* avoid iOS zoom on focus */
+}
+
+/* Form rows: make every input fluid */
+input, select, textarea { max-width: 100%; }
+
+/* ---------- 8. Code that uses min-w-[XXXpx] — allow horizontal
+              scroll on tiny screens instead of breaking layout ---- */
+.overflow-x-auto, [class*="overflow-x-auto"] {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- 9. Ultra-wide caps so content stays readable -------- */
+@media (min-width: 1920px) {
+  main > div { max-width: 1600px; margin-left: auto; margin-right: auto; }
+}
+
+/* ---------- 10. Image inside fixed-aspect logo containers ------- */
+.h-8.w-8 > img, .h-9.w-9 > img { object-fit: contain; }
+
+/* ---------- 11. Buttons should never overflow rows -------------- */
+button, a.inline-flex { max-width: 100%; }
+
+/* ---------- 12. Make community / schemes card grids stack ------- */
+@media (max-width: 480px) {
+  .bv-post, .bv-scheme { width: 100%; }
+}

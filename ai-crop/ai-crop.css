@@ -1,0 +1,177 @@
+/* ============================================================
+   AI-CROP.CSS — Form inputs, section steps, auto-fetch badges,
+   and modal overrides for AI Crop Advisor.
+   ============================================================ */
+
+.bv-input {
+  width: 100%;
+  border-radius: 0.625rem;
+  border: 1px solid #cbd5e1;           /* slate-300 */
+  background: #f8fafc;                 /* slate-50 */
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0f172a;                      /* slate-900 */
+  outline: none;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
+
+.bv-input:focus {
+  border-color: #059669;               /* emerald-600 */
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.dark .bv-input {
+  background: #1e293b;                 /* slate-800 */
+  border-color: #334155;               /* slate-700 */
+  color: #f8fafc;                      /* slate-50 */
+}
+
+.dark .bv-input:focus {
+  border-color: #10b981;               /* emerald-500 */
+  background: #0f172a;                 /* slate-900 */
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Auto-fetched input highlight */
+.bv-input-auto {
+  background: #eff6ff;                 /* blue-50 */
+  border-color: #93c5fd;               /* blue-300 */
+}
+.dark .bv-input-auto {
+  background: rgba(30, 58, 138, 0.25);
+  border-color: #2563eb;
+  color: #f8fafc;
+}
+
+.bv-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;                      /* slate-600 */
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.375rem;
+}
+.dark .bv-label {
+  color: #94a3b8;                      /* slate-400 */
+}
+
+.bv-section {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;    /* slate-200 */
+}
+.dark .bv-section {
+  border-color: #334155;               /* slate-700 */
+}
+.bv-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.bv-step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.375rem;
+  background: #f1f5f9;                 /* slate-100 */
+  color: #475569;                      /* slate-600 */
+  border: 1px solid #cbd5e1;
+}
+.dark .bv-step-badge {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+.bv-auto-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  margin-left: 0.5rem;
+}
+.dark .bv-auto-chip {
+  background: rgba(30, 58, 138, 0.35);
+  color: #60a5fa;
+  border-color: #1d4ed8;
+}
+
+/* Land unit toggle button group */
+.bv-land-unit {
+  padding: 0.625rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  transition: all .15s ease;
+  cursor: pointer;
+}
+.bv-land-unit:first-child { border-radius: 0.625rem 0 0 0.625rem; }
+.bv-land-unit:last-child { border-radius: 0 0.625rem 0.625rem 0; }
+.bv-land-unit:hover { background: #e2e8f0; color: #0f172a; }
+.dark .bv-land-unit {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #334155;
+}
+.dark .bv-land-unit:hover { background: #334155; color: #f8fafc; }
+.bv-land-unit.active {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+.dark .bv-land-unit.active {
+  background: #10b981;
+  color: #0f172a;
+  border-color: #10b981;
+}
+
+/* Soil Modal form inputs */
+#soilModal input,
+#soilModal textarea,
+#soilModal select {
+  background: #1e293b !important;
+  color: #ffffff !important;
+  border: 1px solid #334155 !important;
+  border-radius: 0.5rem;
+}
+
+#soilModal input::placeholder,
+#soilModal textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+#soilModal select option {
+  background: #0f172a !important;
+  color: #ffffff !important;
+}
+
+#soilModal input:focus,
+#soilModal textarea:focus,
+#soilModal select:focus {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* Date picker icon styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.8);
+}

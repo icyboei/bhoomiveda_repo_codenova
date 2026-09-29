@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>BhoomiVeda Login</title>
+
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="auth.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+
+  <!-- GREEN STRIP -->
+
+  <div class="green-bar hi">
+    BhoomiVeda किसानों को मौसम, मिट्टी और बाजार के अनुसार स्मार्ट सुझाव प्रदान करता है।
+  </div>
+
+  <!-- LOGIN AREA -->
+
+  <section class="login-section">
+
+    <div class="login-card">
+
+      <div class="card-logo">
+
+        <img src="bhoomi.png" alt="BhoomiVeda">
+
+        <h2>Bhoomi<span>Veda</span></h2>
+
+        <div class="badge">
+          AI Powered
+        </div>
+
+      </div>
+
+      <!-- TABS -->
+
+      <div class="tabs">
+
+        <button class="tab active" id="loginTab">
+          Login
+        </button>
+
+        <button class="tab" id="signupTab">
+          Signup
+        </button>
+
+      </div>
+
+      <!-- LOGIN FORM -->
+
+      <div class="form active" id="loginForm">
+
+        <h3>Log in</h3>
+
+        <p class="hi">
+          अपने BhoomiVeda अकाउंट में लॉगिन करें
+        </p>
+
+        <div class="input-group">
+          <label class="hi">मोबाइल नंबर</label>
+          <input type="tel" id="loginMobile" maxlength="10" placeholder="मोबाइल नंबर दर्ज करें" inputmode="numeric">
+        </div>
+
+        <div class="input-group">
+          <label class="hi">OTP</label>
+          <div class="otp-row">
+            <input type="text" id="loginOtp" maxlength="6" placeholder="6 अंकों का OTP" inputmode="numeric" disabled>
+            <button type="button" class="otp-btn" id="loginSendOtp">
+              <span class="spinner"></span>
+              <span class="btn-label">Send OTP</span>
+            </button>
+          </div>
+          <div class="otp-verified-badge" id="loginOtpVerified">✓ OTP भेजा गया</div>
+        </div>
+
+        <div class="resend-timer" id="loginResendWrap">
+          <span id="loginResendText">OTP दोबारा भेजें <span id="loginResendCount"></span></span>
+        </div>
+
+        <div class="terms">
+          <input type="checkbox" id="loginTerms" checked>
+
+          <span class="hi">
+            लॉगिन करके आप BhoomiVeda की Terms & Conditions से सहमत हैं।
+          </span>
+        </div>
+
+        <div class="help-box">
+
+          <h4>Need Help?</h4>
+
+          <p>
+            support@bhoomiveda.in
+            <br>
+            Helpdesk Available 24×7
+          </p>
+
+        </div>
+
+        <button type="button" class="submit-btn" id="loginVerifyBtn" disabled>
+          Verify & Login
+        </button>
+
+      </div>
+
+      <!-- SIGNUP FORM -->
+
+      <div class="form" id="signupForm">
+
+        <h3>Signup</h3>
+
+        <p class="hi">
+          नया अकाउंट बनाकर स्मार्ट खेती शुरू करें
+        </p>
+
+        <div class="input-group">
+          <label class="hi">पूरा नाम</label>
+          <input type="text" id="signupName" placeholder="पूरा नाम">
+        </div>
+
+        <div class="role-group">
+          <label class="hi">आप कौन हैं?</label>
+          <div class="role-options">
+            <label class="role-option">
+              <input type="radio" name="userRole" value="farmer" checked>
+              <span class="hi">किसान (Farmer)</span>
+            </label>
+            <label class="role-option">
+              <input type="radio" name="userRole" value="expert">
+              <span>विशेषज्ञ (Expert)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="hi">मोबाइल नंबर</label>
+          <input type="tel" id="signupMobile" maxlength="10" placeholder="मोबाइल नंबर" inputmode="numeric">
+        </div>
+
+        <div class="input-group">
+          <label class="hi">OTP सत्यापन</label>
+          <div class="otp-row">
+            <input type="text" id="signupOtp" maxlength="6" placeholder="6 अंकों का OTP" inputmode="numeric" disabled>
+            <button type="button" class="otp-btn" id="signupSendOtp">
+              <span class="spinner"></span>
+              <span class="btn-label">Send OTP</span>
+            </button>
+          </div>
+          <div class="otp-verified-badge" id="signupOtpSent">✓ OTP भेजा गया</div>
+        </div>
+
+        <div class="resend-timer" id="signupResendWrap">
+          <span id="signupResendText">OTP दोबारा भेजें <span id="signupResendCount"></span></span>
+        </div>
+
+        <div class="terms">
+          <input type="checkbox" id="signupTerms">
+
+          <span class="hi">
+            मैं BhoomiVeda की Terms & Conditions से सहमत हूँ।
+          </span>
+        </div>
+
+        <button type="button" class="submit-btn secondary" id="signupVerifyOtp" disabled>
+          Verify OTP
+        </button>
+
+        <button type="button" class="submit-btn" id="signupCreateBtn" disabled>
+          Create Account
+        </button>
+
+        <p class="switch-auth">
+          Already have an account?
+          <a id="goToLogin">Login</a>
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div>
+      © 2026 BhoomiVeda. All Rights Reserved.
+    </div>
+
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Help Center</a>
+      <a href="#">Watch Tutorials</a>
+    </div>
+
+  </footer>
+
+<script src="../shared/auth.js"></script>
+<script>
+  // If already logged in, skip the auth page entirely.
+  if (window.BV_AUTH && window.BV_AUTH.isLoggedIn()) {
+    window.BV_AUTH.redirectAfterLogin();
+  }
+</script>
+<script src="auth.js"></script>
+
+</body>
+</html>

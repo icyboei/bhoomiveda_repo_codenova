@@ -1,0 +1,15 @@
+/* ============================================================
+   AI-ASSISTANT.CSS — bubble styles for the chat panel.
+   ============================================================ */
+.bv-bubble-ai {
+  background: rgb(243 244 246);  /* gray-100 */
+  color: rgb(55 65 81);          /* gray-700 */
+}
+.dark .bv-bubble-ai {
+  background: rgb(55 65 81);     /* gray-700 */
+  color: rgb(229 231 235);
+}
+.bv-bubble-user {
+  background: rgb(22 163 74);    /* green-600 */
+  color: #fff;
+}

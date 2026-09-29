@@ -1,0 +1,11 @@
+/* ============================================================
+   NAVBAR.CSS — dark/light icon toggle for theme button.
+   ============================================================ */
+
+/* In DARK mode: show sun icon (to switch to light) */
+.bv-icon-light { display: none; }    /* moon — hidden in dark */
+.bv-icon-dark  { display: inline-block; }  /* sun — visible in dark */
+
+/* In LIGHT mode (no .dark class on html): show moon icon */
+html:not(.dark) .bv-icon-light { display: inline-block; }  /* moon — visible in light */
+html:not(.dark) .bv-icon-dark  { display: none; }          /* sun — hidden in light */

@@ -1,0 +1,31 @@
+/* ============================================================
+   HOME.CSS — Dashboard visual styling and animations.
+   ============================================================ */
+
+/* Stat card hover lift */
+.bv-stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bv-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Soil progress bar fill animation */
+.bv-bar-fill {
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Crop pick card hover lift */
+.bv-pick-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bv-pick-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Smooth canvas chart transitions */
+canvas {
+  transition: opacity 0.25s ease;
+}

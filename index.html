@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BhoomiVeda — Smart Farming Dashboard</title>
+  <link rel="icon" href="assets/favicon.svg" />
+
+
+  <script src="shared/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="shared/auth.js"></script>
+  <script>
+    // If already logged in, send straight to the dashboard.
+    if (window.BV_AUTH && window.BV_AUTH.isLoggedIn()) {
+      window.location.replace("home/index.html");
+    }
+  </script>
+  <script src="shared/language.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+  <link rel="stylesheet" href="shared/shell.css" />
+  <link rel="stylesheet" href="shared/theme.css" />
+  <link rel="stylesheet" href="sidebar/sidebar.css" />
+  <link rel="stylesheet" href="navbar/navbar.css" />
+  <link rel="stylesheet" href="ai-assistant/ai-assistant.css" />
+  <link rel="stylesheet" href="home/home.css" />
+</head>
+<body data-page="home-public" data-page-title="Dashboard" data-page-title-key="dashboard"
+      class="bg-gray-50 dark:bg-gray-950 overflow-x-hidden">
+
+<div class="flex h-screen overflow-hidden">
+
+  <div data-include="sidebar/sidebar.html" class="hidden md:flex"></div>
+
+  <div class="flex-1 flex flex-col overflow-hidden w-full">
+
+    <!-- Mobile Header -->
+    <div class="flex items-center justify-between md:hidden px-4 py-3 border-b bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800">
+      
+      <div class="flex items-center gap-2 min-w-0">
+        <button class="p-2 rounded-lg flex-shrink-0">
+          <i data-lucide="menu"></i>
+        </button>
+
+        <div class="flex items-center gap-2 min-w-0">
+          <div class="h-8 w-8 overflow-hidden flex-shrink-0">
+            <img src="assets/bhoomiveda-logo.png"
+                 alt=""
+                 class="w-full h-[200%] max-w-none object-contain object-top" />
+          </div>
+
+          <span class="font-extrabold uppercase tracking-[0.14em] leading-none text-[11px] sm:text-xs text-gray-900 dark:text-white truncate">
+            Bhoomi<span class="text-green-600">Veda</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Language Switch (mobile) — wired automatically by language.js -->
+      <div class="relative flex-shrink-0">
+        <select id="languageSwitcherMobile"
+                class="bv-lang-switcher bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs sm:text-sm px-2 sm:px-3 py-2 rounded-xl outline-none text-gray-700 dark:text-white w-[90px] sm:w-auto">
+          <option value="hi" selected>हिंदी</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Top auth bar (visible on public homepage) -->
+
+    <div data-include="navbar/navbar.html"></div>
+
+    <main class="flex-1 overflow-y-auto overflow-x-hidden">
+      <div class="bg-gray-50 dark:bg-gray-900 min-h-screen p-3 sm:p-4 md:p-6">
+
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 border border-emerald-800/60 dark:border-slate-800 rounded-2xl p-6 sm:p-7 md:p-8 mb-6 text-white relative overflow-hidden shadow-lg">
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10 max-w-3xl">
+
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/60 border border-emerald-700/50 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-3">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span data-i18n="goodMorning">Welcome to BhoomiVeda</span> · Agritech Platform
+            </div>
+
+            <h1 id="bv-welcome-heading" class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 leading-tight tracking-tight text-white">
+                Welcome Kisan
+            </h1>
+
+            <p class="text-emerald-100/90 dark:text-slate-300 text-xs sm:text-sm mb-6 max-w-2xl leading-relaxed font-medium"
+               data-i18n="farmPerformance">
+               Explore weather, soil, market trends and AI crop picks — log in to personalize your farm.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+
+              <a href="auth/index.html"
+                 class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-md active:scale-98">
+                <i data-lucide="sparkles" style="width:16px;height:16px"></i>
+                <span data-i18n="aiAdvice">Get AI Advice</span>
+              </a>
+
+              <a href="auth/index.html"
+                 class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-950/40 hover:bg-slate-950/70 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold border border-slate-700/60 transition-colors">
+                <i data-lucide="bar-chart-3" style="width:16px;height:16px"></i>
+                <span data-i18n="viewReport">View Report</span>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Stats (4 column grid on desktop) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6"
+             id="bv-stat-row">
+        </div>
+
+        <!-- Weather + Soil -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+          <!-- Weather Card -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 text-white shadow-md overflow-hidden relative">
+            <div class="flex justify-between items-start gap-3 mb-5">
+
+              <div class="min-w-0">
+                <div data-i18n="currentWeather"
+                  class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  Current Weather
+                </div>
+
+                <div class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mt-1">
+                  28°C
+                </div>
+
+                <div data-i18n="weatherStatus"
+                  class="text-xs sm:text-sm text-slate-300 mt-1.5 break-words flex items-center gap-1.5 font-medium">
+                  <i data-lucide="map-pin" style="width:14px;height:14px" class="text-emerald-400 flex-shrink-0"></i>
+                  <span>Partly Sunny · Bhopal, MP</span>
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-slate-800/90 rounded-xl text-amber-400 flex-shrink-0 border border-slate-700/50 shadow-inner">
+                <i data-lucide="sun" style="width:32px;height:32px"></i>
+              </div>
+            </div>
+
+            <!-- Weather Metrics -->
+            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-slate-800/80">
+
+              <div class="text-center p-2 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i data-lucide="droplets"
+                  class="mx-auto mb-1 text-sky-400"
+                  style="width:15px;height:15px"></i>
+
+                <div class="text-sm font-bold text-white">62%</div>
+
+                <div data-i18n="humidity"
+                  class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                  Humidity
+                </div>
+              </div>
+
+              <div class="text-center p-2 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i data-lucide="wind"
+                  class="mx-auto mb-1 text-teal-400"
+                  style="width:15px;height:15px"></i>
+
+                <div class="text-sm font-bold text-white">14 km/h</div>
+
+                <div data-i18n="wind"
+                  class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                  Wind
+                </div>
+              </div>
+
+              <div class="text-center p-2 rounded-xl bg-slate-800/40 border border-slate-800">
+                <i data-lucide="cloud-rain"
+                  class="mx-auto mb-1 text-blue-400"
+                  style="width:15px;height:15px"></i>
+
+                <div class="text-sm font-bold text-white">15%</div>
+
+                <div data-i18n="rain"
+                  class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                  Rain
+                </div>
+              </div>
+            </div>
+
+            <!-- Forecast Strip -->
+            <div class="mt-4 overflow-x-auto">
+              <div class="grid grid-cols-5 gap-2 min-w-[300px]">
+
+                <div class="text-center bg-slate-800/60 border border-slate-700/50 rounded-xl p-2">
+                  <div class="text-[10px] font-bold text-slate-400">Mon</div>
+                  <div class="my-1 flex justify-center text-slate-300"><i data-lucide="cloud-sun" style="width:16px;height:16px"></i></div>
+                  <div class="text-xs font-bold text-white">26°</div>
+                </div>
+
+                <div class="text-center bg-slate-800/60 border border-slate-700/50 rounded-xl p-2">
+                  <div class="text-[10px] font-bold text-slate-400">Tue</div>
+                  <div class="my-1 flex justify-center text-amber-400"><i data-lucide="sun" style="width:16px;height:16px"></i></div>
+                  <div class="text-xs font-bold text-white">28°</div>
+                </div>
+
+                <div class="text-center bg-slate-800/60 border border-slate-700/50 rounded-xl p-2">
+                  <div class="text-[10px] font-bold text-slate-400">Wed</div>
+                  <div class="my-1 flex justify-center text-blue-400"><i data-lucide="cloud-rain" style="width:16px;height:16px"></i></div>
+                  <div class="text-xs font-bold text-white">24°</div>
+                </div>
+
+                <div class="text-center bg-slate-800/60 border border-slate-700/50 rounded-xl p-2">
+                  <div class="text-[10px] font-bold text-slate-400">Thu</div>
+                  <div class="my-1 flex justify-center text-blue-400"><i data-lucide="cloud-rain" style="width:16px;height:16px"></i></div>
+                  <div class="text-xs font-bold text-white">22°</div>
+                </div>
+
+                <div class="text-center bg-slate-800/60 border border-slate-700/50 rounded-xl p-2">
+                  <div class="text-[10px] font-bold text-slate-400">Fri</div>
+                  <div class="my-1 flex justify-center text-slate-300"><i data-lucide="cloud-sun" style="width:16px;height:16px"></i></div>
+                  <div class="text-xs font-bold text-white">27°</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Soil Card -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm">
+            
+            <div class="flex items-center justify-between gap-3 mb-5">
+              
+              <div class="flex items-center gap-2">
+                <div class="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/40">
+                  <i data-lucide="test-tube-2" style="width:18px;height:18px"></i>
+                </div>
+                <h3 data-i18n="soilHealth"
+                  class="font-bold text-slate-900 dark:text-white text-base">
+                  Soil Health & Nutrients
+                </h3>
+              </div>
+
+              <span data-i18n="good"
+                class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200/60 dark:bg-emerald-950/60 dark:border-emerald-800/50 dark:text-emerald-300 px-3 py-1 rounded-full font-bold whitespace-nowrap">
+                Optimal Condition
+              </span>
+            </div>
+
+            <div class="space-y-4" id="bv-soil-bars"></div>
+
+            <div data-i18n="addNitrogen"
+              class="mt-5 p-3.5 rounded-xl text-xs sm:text-sm bg-emerald-50/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 border border-emerald-200/60 dark:border-slate-700/60 leading-relaxed flex items-start gap-2.5">
+              <i data-lucide="lightbulb" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" style="width:16px;height:16px"></i>
+              <span class="font-medium">Add 20kg nitrogen fertilizer to Field A before next irrigation to maximize crop yield.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Market + AI Picks Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+
+          <!-- Market Chart -->
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm overflow-hidden">
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+
+              <div>
+                <h3 data-i18n="marketTrends"
+                  class="font-bold text-slate-900 dark:text-white text-base">
+                  Market Price Trends
+                </h3>
+                <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">Monthly Mandi price indexes (₹/Quintal)</p>
+              </div>
+
+              <div class="flex flex-wrap gap-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full inline-block bg-emerald-500"></span>
+                  Wheat
+                </span>
+
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full inline-block bg-blue-600"></span>
+                  Rice
+                </span>
+
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full inline-block bg-amber-500"></span>
+                  Soybean
+                </span>
+              </div>
+            </div>
+
+            <div class="w-full overflow-x-auto">
+              <div style="height:220px; min-width:300px">
+                <canvas id="bv-market-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Picks -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm">
+            
+            <div class="flex items-center justify-between mb-4">
+              
+              <h3 data-i18n="aiTopPicks"
+                class="font-bold text-slate-900 dark:text-white text-base">
+                AI Top Picks
+              </h3>
+
+              <div class="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
+                <i data-lucide="sparkles" style="width:16px;height:16px"></i>
+              </div>
+            </div>
+
+            <div class="space-y-3" id="bv-crop-picks"></div>
+          </div>
+        </div>
+
+        <!-- Bottom Cards Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm">
+            
+            <h3 data-i18n="profitPrediction"
+              class="font-bold text-slate-900 dark:text-white text-base mb-4">
+              Profit & Revenue Forecast
+            </h3>
+
+            <div class="w-full overflow-x-auto">
+              <div style="height:170px; min-width:280px">
+                <canvas id="bv-profit-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm">
+            
+            <h3 data-i18n="recentActivity"
+              class="font-bold text-slate-900 dark:text-white text-base mb-4">
+              Recent Field Log
+            </h3>
+
+            <div class="space-y-2.5" id="bv-activity"></div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm">
+            
+            <h3 data-i18n="notifications"
+              class="font-bold text-slate-900 dark:text-white text-base mb-4">
+              Advisory Alerts
+            </h3>
+
+            <div class="space-y-3" id="bv-notif-cards"></div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div data-include="ai-assistant/ai-assistant.html"></div>
+</div>
+
+<script src="shared/data.js"></script>
+<script src="shared/shell.js"></script>
+<script src="sidebar/sidebar.js"></script>
+<script src="navbar/navbar.js"></script>
+<script src="ai-assistant/ai-assistant.js"></script>
+<script src="home/home.js"></script>
+</body>
+</html>

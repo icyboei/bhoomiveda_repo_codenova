@@ -1,0 +1,84 @@
+/* ============================================================
+   SIDEBAR.CSS — Production-grade product navigation styles.
+   ============================================================ */
+
+.bv-sidebar {
+  transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease;
+}
+
+/* Nav links --------------------------------------------------- */
+.bv-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;                      /* slate-600 */
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, transform .12s ease;
+}
+
+.bv-link:hover {
+  background: #f1f5f9;                 /* slate-100 */
+  color: #0f172a;                      /* slate-900 */
+}
+
+.bv-link:active {
+  transform: scale(0.99);
+}
+
+.dark .bv-link {
+  color: #94a3b8;                      /* slate-400 */
+}
+.dark .bv-link:hover {
+  background: rgba(30, 41, 59, 0.8);  /* slate-800/80 */
+  color: #f8fafc;                      /* slate-50 */
+}
+
+/* Active item — refined emerald tint with subtle left indicator */
+.bv-link.active {
+  background: #ecfdf5;                 /* emerald-50 */
+  color: #047857;                      /* emerald-700 */
+  font-weight: 600;
+}
+.bv-link.active:hover {
+  background: #d1fae5;                 /* emerald-100 */
+  color: #065f46;
+}
+
+.dark .bv-link.active {
+  background: rgba(16, 185, 129, 0.14);
+  color: #34d399;                      /* emerald-400 */
+}
+.dark .bv-link.active:hover {
+  background: rgba(16, 185, 129, 0.22);
+  color: #6ee7b7;
+}
+
+/* Left accent bar on active link */
+.bv-link.active::before {
+  content: "";
+  position: absolute;
+  left: -0.875rem;
+  top: 20%;
+  bottom: 20%;
+  width: 3.5px;
+  border-radius: 0 4px 4px 0;
+  background: #059669;                 /* emerald-600 */
+}
+.dark .bv-link.active::before {
+  background: #10b981;                 /* emerald-500 */
+}
+
+.bv-link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  stroke-width: 2;
+}
+.bv-link span { line-height: 1.25; }
+

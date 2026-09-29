@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Government Schemes — BhoomiVeda</title>
+  <link rel="icon" href="../assets/favicon.svg" />
+  <script src="../shared/tailwind-config.js"></script>
+  <script src="../shared/auth.js"></script>
+  <script src="../shared/language.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <link rel="stylesheet" href="../shared/shell.css" />
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="../sidebar/sidebar.css" />
+  <link rel="stylesheet" href="../navbar/navbar.css" />
+  <link rel="stylesheet" href="../ai-assistant/ai-assistant.css" />
+  <link rel="stylesheet" href="schemes.css" />
+</head>
+<body data-protected="true" data-page="schemes" data-page-title="Government Schemes" data-page-title-key="govSchemes" class="bg-gray-50 dark:bg-gray-950">
+<div class="flex h-screen overflow-hidden">
+  <div data-include="../sidebar/sidebar.html" class="hidden md:flex"></div>
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <div class="flex items-center md:hidden px-4 py-3 border-b bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800">
+      <button class="p-2 rounded-lg"><i data-lucide="menu"></i></button>
+      <div class="flex items-center gap-2.5 ml-2 min-w-0">
+        <div class="h-8 w-8 overflow-hidden flex-shrink-0">
+          <img src="../assets/bhoomiveda-logo.png" alt="" class="w-full h-[200%] max-w-none object-contain object-top" />
+        </div>
+        <span class="font-extrabold uppercase tracking-[0.14em] leading-none text-xs text-gray-900 dark:text-white">
+          Bhoomi<span class="text-green-600">Veda</span>
+        </span>
+      </div>
+    </div>
+    <div data-include="../navbar/navbar.html"></div>
+    <main class="flex-1 overflow-y-auto">
+<div class="bg-slate-50 dark:bg-slate-950 min-h-screen p-4 sm:p-6 md:p-8">
+  <div class="mb-6">
+    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5 tracking-tight" data-i18n="schemesTitle">
+      <div class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/40">
+        <i data-lucide="landmark" style="width:20px;height:20px"></i>
+      </div>
+      <span>Government Schemes</span>
+    </h2>
+    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium" data-i18n="schemesSubtitle">Discover eligible subsidies, financial aid, and agriculture support programs.</p>
+  </div>
+
+  <div class="flex flex-wrap gap-3 mb-6 items-center">
+    <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex-1 max-w-sm shadow-sm focus-within:border-emerald-500 transition-colors">
+      <i data-lucide="search" class="text-slate-400 dark:text-slate-500" style="width:16px;height:16px"></i>
+      <input id="bv-search" data-i18n-attr="placeholder:searchSchemes" placeholder="Search schemes by name or ministry..." class="outline-none bg-transparent text-sm text-slate-900 dark:text-white w-full font-medium" />
+    </div>
+    <div id="bv-cats" class="flex flex-wrap gap-2"></div>
+  </div>
+
+  <div id="bv-schemes" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+</div>
+    </main>
+  </div>
+  <div data-include="../ai-assistant/ai-assistant.html"></div>
+</div>
+<script src="../shared/data.js"></script>
+<script src="../shared/shell.js"></script>
+<script src="../sidebar/sidebar.js"></script>
+<script src="../navbar/navbar.js"></script>
+<script src="../ai-assistant/ai-assistant.js"></script>
+<script src="schemes.js"></script>
+</body>
+</html>

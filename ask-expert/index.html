@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ask Expert — BhoomiVeda</title>
+  <link rel="icon" href="../assets/favicon.svg" />
+  <script src="../shared/tailwind-config.js"></script>
+  <script src="../shared/config.js"></script>
+  <script src="../shared/auth.js"></script>
+  <script src="../shared/language.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../shared/shell.css" />
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="../sidebar/sidebar.css" />
+  <link rel="stylesheet" href="../navbar/navbar.css" />
+  <link rel="stylesheet" href="../ai-assistant/ai-assistant.css" />
+  <link rel="stylesheet" href="ask-expert.css" />
+</head>
+<body data-protected="true" data-page="ask-expert" data-page-title="Ask Expert" data-page-title-key="aePageTitle" class="bg-gray-50 dark:bg-gray-950">
+<div class="flex h-screen overflow-hidden">
+  <div data-include="../sidebar/sidebar.html" class="hidden md:flex"></div>
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Mobile header -->
+    <div class="flex items-center md:hidden px-4 py-3 border-b bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800">
+      <button class="p-2 rounded-lg"><i data-lucide="menu"></i></button>
+      <div class="flex items-center gap-2.5 ml-2 min-w-0">
+        <div class="h-8 w-8 overflow-hidden flex-shrink-0">
+          <img src="../assets/bhoomiveda-logo.png" alt="" class="w-full h-[200%] max-w-none object-contain object-top" />
+        </div>
+        <span class="font-extrabold uppercase tracking-[0.14em] leading-none text-xs text-gray-900 dark:text-white">
+          Bhoomi<span class="text-green-600">Veda</span>
+        </span>
+      </div>
+    </div>
+    <div data-include="../navbar/navbar.html"></div>
+
+    <main class="flex-1 overflow-y-auto">
+      <div class="p-4 sm:p-6 md:p-8 max-w-6xl mx-auto w-full">
+        <div class="mb-6 flex items-start justify-between flex-wrap gap-4">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5 tracking-tight" data-i18n="aeHeading">
+              <div class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/40">
+                <i data-lucide="user-check" style="width:20px;height:20px"></i>
+              </div>
+              <span>Ask Agronomy Expert</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium" data-i18n="aeSubtitle">Direct 1-on-1 consultation with certified agricultural experts & crop specialists.</p>
+          </div>
+        </div>
+
+        <!-- LIST VIEW -->
+        <div id="ae-list-view">
+          <button id="ae-new-btn" class="w-full sm:w-auto mb-6 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-xl text-sm font-bold transition-all shadow-md active:scale-98">
+            <i data-lucide="plus" style="width:16px;height:16px"></i>
+            <span data-i18n="aeNewConsultation">Start New Consultation</span>
+          </button>
+
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider" data-i18n="aePreviousConsultations">Previous Consultations</h3>
+          </div>
+          <div id="ae-consult-list" class="space-y-3"></div>
+          <div id="ae-empty" class="hidden text-center text-sm text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl py-12 px-4 shadow-sm" data-i18n="aeNoConsultations">No consultations logged yet. Click 'Start New Consultation' to reach an expert.</div>
+        </div>
+
+        <!-- NEW CONSULTATION FORM -->
+        <div id="ae-form-view" class="hidden bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-7 shadow-sm max-w-3xl">
+          <button class="ae-back-btn text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-5 inline-flex items-center gap-1 hover:underline" data-i18n="aeBackToList">← Back to Consultations</button>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-5" data-i18n="aeNewConsultation">Submit Consultation Query</h3>
+
+          <div class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="bv-label" data-i18n="aeCropName">Crop Name</label>
+                <input id="ae-crop" type="text" data-i18n-attr="placeholder:aeCropNamePh" placeholder="e.g. Wheat / Soybean" class="bv-input" />
+              </div>
+              <div>
+                <label class="bv-label" data-i18n="aeProblemCategory">Problem Category</label>
+                <select id="ae-category" class="bv-input">
+                  <option value="disease" data-i18n="aeCatDisease">Disease / Infection</option>
+                  <option value="pest" data-i18n="aeCatPest">Pest Attack</option>
+                  <option value="fertilizer" data-i18n="aeCatFertilizer">Fertilizer & Nutrition</option>
+                  <option value="irrigation" data-i18n="aeCatIrrigation">Irrigation / Water Issue</option>
+                  <option value="soil" data-i18n="aeCatSoil">Soil Salinity / Health</option>
+                  <option value="weather" data-i18n="aeCatWeather">Weather / Frost Damage</option>
+                  <option value="yield" data-i18n="aeCatYield">Low Yield / Stunted Growth</option>
+                  <option value="other" data-i18n="aeCatOther">Other General Query</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="bv-label">
+                <span data-i18n="aeDescription">Problem Description</span>
+                <span class="text-slate-400 font-normal lowercase ml-1" data-i18n="aeOptional">(optional)</span>
+              </label>
+              <textarea id="ae-desc" rows="4" data-i18n-attr="placeholder:aeDescriptionPh" placeholder="Describe symptoms, affected land area, duration..." class="bv-input resize-none"></textarea>
+              <div id="ae-desc-info" class="hidden mt-2 flex items-start gap-2 px-3 py-2 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 text-xs text-sky-700 dark:text-sky-300 font-medium">
+                <i data-lucide="info" style="width:14px;height:14px;flex-shrink:0;margin-top:2px"></i>
+                <span data-i18n="aeNoDescInfo">No detailed description provided. Expert will analyze based on crop, photos and category.</span>
+              </div>
+            </div>
+
+            <!-- Photos -->
+            <div>
+              <label class="bv-label" data-i18n="aeCropPhotos">Attach Crop Photos</label>
+              <div class="flex flex-wrap gap-2.5">
+                <label class="ae-btn-camera cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-emerald-400 text-emerald-700 dark:text-emerald-400 text-xs font-bold hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors">
+                  <i data-lucide="camera" style="width:15px;height:15px"></i>
+                  <span data-i18n="aeCamera">Take Photo</span>
+                  <input type="file" accept="image/jpeg,image/jpg,image/png,image/webp" capture="environment" multiple class="hidden ae-photo-input" />
+                </label>
+                <label class="ae-btn-secondary cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                  <i data-lucide="image" style="width:15px;height:15px"></i>
+                  <span data-i18n="aeGallery">Upload Gallery</span>
+                  <input type="file" accept="image/jpeg,image/jpg,image/png,image/webp" multiple class="hidden ae-photo-input" />
+                </label>
+              </div>
+              <div id="ae-photo-preview" class="flex flex-wrap gap-2.5 mt-3"></div>
+            </div>
+
+            <!-- Voice -->
+            <div>
+              <label class="bv-label" data-i18n="aeVoiceNote">Voice Message (optional)</label>
+              <div class="flex flex-wrap gap-2.5 items-center">
+                <button type="button" id="ae-record-btn" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 text-xs font-bold hover:bg-red-100 transition-colors">
+                  <i data-lucide="mic" style="width:15px;height:15px"></i>
+                  <span id="ae-record-label" data-i18n="aeRecordVoice">Record Voice</span>
+                </button>
+                <label class="ae-btn-secondary cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                  <i data-lucide="upload" style="width:15px;height:15px"></i>
+                  <span data-i18n="aeUploadAudio">Upload Audio</span>
+                  <input type="file" id="ae-audio-input" accept="audio/*" class="hidden" />
+                </label>
+                <span id="ae-record-timer" class="text-xs text-slate-500 font-bold hidden">00:00</span>
+              </div>
+              <audio id="ae-audio-preview" controls class="mt-3 hidden w-full max-w-sm"></audio>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+              <button id="ae-submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition-all shadow-md active:scale-98" data-i18n="aeSubmit">Submit Consultation</button>
+              <button class="ae-back-btn ae-cancel-btn px-5 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800" data-i18n="aeCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAT VIEW: chat panel + expert video panel (responsive grid) -->
+        <div id="ae-chat-view" class="hidden">
+          <div class="ae-chat-grid">
+
+            <!-- Chat panel -->
+            <section class="ae-chat-panel bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+              <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50">
+                <button class="ae-back-btn text-emerald-700 dark:text-emerald-400 text-xs font-bold hover:underline" data-i18n="aeBackToList">← Back</button>
+                <div class="flex-1 min-w-0">
+                  <div id="ae-chat-title" class="text-sm font-bold text-slate-900 dark:text-white truncate"></div>
+                  <div id="ae-chat-status" class="text-[11px] text-slate-500 dark:text-slate-400 font-medium"></div>
+                </div>
+              </div>
+
+              <div id="ae-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/50 dark:bg-slate-950"></div>
+
+              <div class="border-t border-slate-200/80 dark:border-slate-800 p-3 bg-white dark:bg-slate-900">
+                <div class="flex items-center gap-2">
+                  <label class="cursor-pointer p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/60 dark:border-slate-700/60 transition-colors">
+                    <i data-lucide="paperclip" style="width:16px;height:16px"></i>
+                    <input type="file" id="ae-chat-attach" accept="image/*,audio/*" class="hidden" />
+                  </label>
+                  <textarea id="ae-chat-input" rows="1" data-i18n-attr="placeholder:aeChatPlaceholder" placeholder="Type message to expert..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500 resize-none max-h-32 font-medium"></textarea>
+                  <button id="ae-chat-send" class="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition-colors shadow-sm">
+                    <i data-lucide="send" style="width:16px;height:16px"></i>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Expert Video Advice panel -->
+            <aside class="ae-video-card bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-5">
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/40 flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="play-circle" style="width:18px;height:18px"></i>
+                </span>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="aeVideoHeading">Expert Video Advisory</h3>
+                  <div class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">Dr. R. K. Sharma · Chief Agronomist</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 leading-relaxed font-medium" data-i18n="aeVideoSubtitle">Watch specialized video advice for your crop category.</p>
+
+              <!-- Responsive 16:9 video frame -->
+              <div id="ae-video-frame" class="ae-video-frame shadow-md"></div>
+
+              <!-- Custom play / pause controls -->
+              <div id="ae-video-controls" class="mt-3.5 hidden">
+                <button id="ae-video-toggle" type="button" class="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm">
+                  <i data-lucide="play" style="width:14px;height:14px"></i>
+                  <span id="ae-video-toggle-label" data-i18n="aeVideoPlay">Play Video Advice</span>
+                </button>
+              </div>
+            </aside>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div data-include="../ai-assistant/ai-assistant.html"></div>
+</div>
+
+<script src="../shared/shell.js"></script>
+<script src="../sidebar/sidebar.js"></script>
+<script src="../navbar/navbar.js"></script>
+<script src="../ai-assistant/ai-assistant.js"></script>
+<script src="ask-expert.js"></script>
+</body>
+</html>

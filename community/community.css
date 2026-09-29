@@ -1,0 +1,7 @@
+/* ============================================================
+   COMMUNITY.CSS — small hover/transition tweaks for posts.
+   ============================================================ */
+.bv-post { transition: all .3s ease; }
+.bv-post:hover { box-shadow: 0 10px 24px -16px rgba(0,0,0,.18); }
+.bv-like.liked { color: rgb(239 68 68); }      /* red-500 */
+.bv-like.liked svg { fill: currentColor; }
