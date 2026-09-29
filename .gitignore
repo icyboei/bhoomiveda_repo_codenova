@@ -24,10 +24,12 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+# macOS metadata
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+__MACOSX/
 scratch/
